@@ -48,6 +48,5 @@ export default class Reader {
                 }
             }
         });
-        return this.vueComponents;
     }
 }
