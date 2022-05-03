@@ -3,8 +3,7 @@ import fs from 'fs';
 export default class Reader {
 
     constructor() {
-        this.files = [];
-        this.vueFileData = [];
+        this.vueComponents = [];
     }
 
     getComponentName(file) {
@@ -27,31 +26,28 @@ export default class Reader {
         }
     }
 
-    // isVueFile(filePath)
-
-    readFiles(dir) {
-        let dirContents = fs.readdirSync(dir);
-        dirContents.forEach((dirItem) => {
-            // console.log(dirItem)
-            if (fs.statSync(`${dir}/${dirItem}`).isDirectory()) {
-                this.readFiles(`${dir}/${dirItem}`)
-            } else {
-                this.files.push(`${dir}/${dirItem}`)
-            }
-        });
-
-        console.log(this.files.length);
-
-
-        // const componentName = this.getFileName(filePath);
-        // const data = fs.readFileSync(filePath).toString();
-        // const templateString = this.getTemplateFromFileContents(data, filePath);
-        // this.files.push({
-        //     componentName: componentName,
-        //     templateString: templateString
-        // });
-        // return this.files;
+    isVueFile(filepath) {
+        const regex = /(\w+)(.vue|.Vue)/;
+        return filepath.match(regex);
     }
 
-
+    buildFileList(dir) {
+        let dirContents = fs.readdirSync(dir);
+        dirContents.forEach((dirItem) => {
+            if (fs.statSync(`${dir}/${dirItem}`).isDirectory()) {
+                this.buildFileList(`${dir}/${dirItem}`)
+            } else {
+                if (this.isVueFile(`${dir}/${dirItem}`)) {
+                    const data = fs.readFileSync(`${dir}/${dirItem}`).toString();
+                    const componentName = this.getComponentName(`${dir}/${dirItem}`);
+                    const componentTemplate = this.getTemplateFromFileContents(data, `${dir}/${dirItem}`);
+                    this.vueComponents.push({
+                        componentName: componentName,
+                        componentTemplate: componentTemplate
+                    });
+                }
+            }
+        });
+        return this.vueComponents;
+    }
 }

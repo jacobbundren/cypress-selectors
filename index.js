@@ -1,8 +1,7 @@
 import Reader from "./src/reader.js";
 
 let reader = new Reader()
+let dir = "../../tpg/clients/dyt-client/src";
 
-// console.log(reader.readFiles("../../tpg/clients/dyt-client/src/App.vue"));
-// reader.readFiles("../../tpg/clients/dyt-client/src/App.vue")
+reader.buildFileList(dir);
 
-reader.readFiles("../../tpg/clients/dyt-client/src")
