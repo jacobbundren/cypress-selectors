@@ -1,6 +1,6 @@
 import Reader from "./src/reader.js";
 
-var data = Reader.readFile("../../tpg/clients/dyt-client/src/App.vue")
+let reader = new Reader()
 
-console.log(data)
-
+// console.log(reader.readFiles("../../tpg/clients/dyt-client/src/App.vue"));
+reader.readFiles("../../tpg/clients/dyt-client/src/App.vue")
