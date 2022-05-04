@@ -35,7 +35,4 @@ export default class Parser {
             this.parsedComponents.push(parsedComponent);
         }
     }
-
-
-
 }
