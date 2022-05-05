@@ -8,10 +8,9 @@ export default class Writer {
 
     iterateFiles() {
         this.makeDir("./selectors/");
-        this.getOrCreateFile(this.components[0]);
-        // this.components.forEach((component) => {
-        //     this.writeFile(component);
-        // })
+        this.components.forEach((component) => {
+            this.getOrCreateFile(component);
+        })
     }
 
     makeDir(filepath) {
@@ -39,20 +38,26 @@ export default class Writer {
 
     writeNewFile(component, filepath) {
         let utilityImport = `import { dataCy } from "../support/utilities"\n\n`;
-        let classDeclaration = `export default class ${component.componentName}Selectors {\n\n`;
+        let declaration = `export const ${component.componentName}Selectors = {\n`;
         let closingBrackets = `};`;
-
-        fs.writeFileSync(filepath, utilityImport + classDeclaration + closingBrackets);
+        let properties = this.createClassProperties(component);
+        fs.writeFileSync(filepath, utilityImport + declaration + properties + closingBrackets);
     }
 
     createClassProperties(component) {
         let classProperties = ``;
         component.selectors.forEach((selector) => {
-            classProperties += `const ${selector}`
+            let propertyName = this.transformSelector(selector);
+            classProperties += `\t${propertyName}: dataCy("${selector}"),\n`;
         })
+        return classProperties;
     }
 
     transformSelector(selector) {
-        
+        let property = selector.split("-");
+        for (let i = 1; i < property.length; i++) {
+            property[i] = property[i].charAt(0).toUpperCase() + property[i].slice(1);
+        }
+        return property.join("");
     }
 }
