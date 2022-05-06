@@ -9,7 +9,7 @@ export default class Parser {
         if (this.vueComponents.length > 0) {
             this.vueComponents.forEach((component) => {
                 if (component.componentName && component.componentTemplate) {
-                    this.parseComponent(component)
+                    this.parseAttributes(component);
                 } else {
                     throw new Error("Component missing properties to parse")
                 }
@@ -19,20 +19,25 @@ export default class Parser {
         }
     }
 
-    parseComponent(unparsedComponent) {
-        let attrRegex = /data-cy="(.+?)"/gm
-        let valRegex = /"(.+)"/
-        let parsedComponent = {};
-        let matchedSelectors = unparsedComponent.componentTemplate.match(attrRegex)
+    parseAttributes(component) {
+        let attrRegex = /data-cy="(.+?)"/g
+        let selectors = [];
+        let matchedSelectors = component.componentTemplate.match(attrRegex);
         if (matchedSelectors) {
-            parsedComponent = {
-                componentName: unparsedComponent.componentName,
-                selectors: []
-            };
-            matchedSelectors.forEach((selector) => {
-                parsedComponent.selectors.push(selector.match(valRegex)[1]);
+            matchedSelectors.forEach(selector => {
+                selectors.push(this.parseAttributeValues(selector));
             })
-            this.parsedComponents.push(parsedComponent);
         }
+        if (selectors.length > 0) {
+            this.parsedComponents.push({
+                componentName: component.componentName,
+                selectors: selectors
+            });
+        }
+    }
+
+    parseAttributeValues(attribute) {
+        let valRegex = /"(.+?)"/
+        return attribute.match(valRegex)[1];
     }
 }

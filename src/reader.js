@@ -17,7 +17,7 @@ export default class Reader {
     }
 
     getTemplateFromFileContents(contents, filePath) {
-        let regex = /(<template>(.|\n)*?<\/template>)/;
+        let regex = /(<template>(.|\n)*?<script>)/;
         let componentTemplate = contents.match(regex)[0] ? contents.match(regex)[0] : null;
         if (componentTemplate) {
             return componentTemplate;
@@ -28,6 +28,8 @@ export default class Reader {
 
     isVueFile(filepath) {
         const regex = /(\w+)(.vue|.Vue)/;
+        if (filepath.match(regex)) {
+        }
         return filepath.match(regex);
     }
 
