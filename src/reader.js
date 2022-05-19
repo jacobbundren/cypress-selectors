@@ -7,7 +7,7 @@ export default class Reader {
     }
 
     getComponentName(file) {
-        const regex = /(\w+)(.vue|.Vue)/;
+        const regex = /(\w+)(\.vue|\.Vue)/;
         let componentName = file.match(regex)[1] ? file.match(regex)[1] : null;
         if (componentName) {
             return componentName;
@@ -27,9 +27,7 @@ export default class Reader {
     }
 
     isVueFile(filepath) {
-        const regex = /(\w+)(.vue|.Vue)/;
-        if (filepath.match(regex)) {
-        }
+        const regex = /(\w+)(\.vue|\.Vue)/;
         return filepath.match(regex);
     }
 
