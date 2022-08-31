@@ -34,7 +34,7 @@ export default class Reader {
     }
 
     buildFileList(dir) {
-        let dirContents = fs.readdirSync(dir);
+        let dirContents = fs.readdirSync(dir); // TODO: Convert all to async if time allows.
         dirContents.forEach((dirItem) => {
             if (fs.statSync(`${dir}/${dirItem}`).isDirectory()) {
                 this.buildFileList(`${dir}/${dirItem}`)

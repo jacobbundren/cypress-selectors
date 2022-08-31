@@ -1,5 +1,5 @@
 {
-  "name": "cypress-selectors",
+  "name": "cypress-selector-generator",
   "version": "1.0.0",
   "main": "index.js",
   "type": "module",
@@ -8,7 +8,15 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
-  "author": "",
+  "author": "Jacob Bundren",
   "license": "ISC",
-  "description": ""
+  "description": "Utility to help write more stable Cypress tests.",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jacobbundren/cypress-selectors.git"
+  },
+  "bugs": {
+    "url": "https://github.com/jacobbundren/cypress-selectors/issues"
+  },
+  "homepage": "https://github.com/jacobbundren/cypress-selectors#readme"
 }
